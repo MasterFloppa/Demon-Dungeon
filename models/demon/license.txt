@@ -1,0 +1,11 @@
+Model Information:
+* title:	Demon Mask
+* source:	https://sketchfab.com/3d-models/demon-mask-e8f1ddf1cd344a50bdb4a30beaff8333
+* author:	egorova.e (https://sketchfab.com/silentegor)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Demon Mask" (https://sketchfab.com/3d-models/demon-mask-e8f1ddf1cd344a50bdb4a30beaff8333) by egorova.e (https://sketchfab.com/silentegor) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

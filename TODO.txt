@@ -1,0 +1,11 @@
+--------------Problems----------------
+1. Camera gets lost inside obejcts
+
+--------------------------------------
+
+
+
+---------------BUGS-------------------
+1. If start to move and click out of window, movement doesnt stop.
+
+--------------------------------------
