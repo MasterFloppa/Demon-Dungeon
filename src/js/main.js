@@ -120,8 +120,9 @@ const axesHelper = new THREE.AxesHelper(10);             // 10 is the size of th
 
 //---------------------------------------* Lighting *---------------------------------------------
 
-const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1.0);
-directionalLight.position.set(-100, 100, 100);
+const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 3.0);
+// directionalLight.position.set(-100, 100, 100);
+directionalLight.position.set(0, 100, 50);
 directionalLight.target.position.set(0, 0, 0);
 directionalLight.castShadow = true;
 directionalLight.shadow.bias = -0.001;
@@ -137,7 +138,7 @@ directionalLight.shadow.camera.top = 50;
 directionalLight.shadow.camera.bottom = -50;
 this.scene.add(directionalLight);
 
-const ambientLight = new THREE.AmbientLight(0xFFFFFF, 3.0);
+const ambientLight = new THREE.AmbientLight(0x808080, 1);
 this.scene.add(ambientLight);
 
 
@@ -184,13 +185,13 @@ this.scene.add(plane);
 
 
 // Box
-const boxGeometry = new THREE.BoxGeometry(20, 20, 20);                               // Create a box geometry
-const boxMaterial = new THREE.MeshBasicMaterial({                          // Create a material (color) for the box
+const boxGeometry = new THREE.BoxGeometry(20, 20, 20);                              // Create a box geometry
+const boxMaterial = new THREE.MeshBasicMaterial({                                   // Create a material (color) for the box
     color: 0xFF0000
 });        
 const box = new THREE.Mesh(boxGeometry, boxMaterial);
 
-box.position.set(30, 10, 30);
+box.position.set(30, 30, 30);
 box.castShadow = true;
 box.receiveShadow = true;
 this.scene.add(box);
