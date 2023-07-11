@@ -7,4 +7,23 @@ body {
   padding: 0;
   overscroll-behavior: none;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#startButton{
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 30px;
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  width:25%;
+  height:10%
 }

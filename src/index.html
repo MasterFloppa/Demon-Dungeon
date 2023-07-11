@@ -6,6 +6,13 @@
   <link rel="stylesheet" type="text/css" href="base.css">
 </head>
 <body>
+  <script>
+    function started() {
+      var elem = document.getElementById('startButton');
+      elem.remove();
+    }
+  </script>
+    <button id="startButton" onclick="started()">Start</button>
   <script src="./js/main.js" type="module">
   </script>
 </body>
