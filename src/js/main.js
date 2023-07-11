@@ -120,8 +120,9 @@ const axesHelper = new THREE.AxesHelper(10);             // 10 is the size of th
 
 //---------------------------------------* Lighting *---------------------------------------------
 
-const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1.0);
-directionalLight.position.set(-100, 100, 100);
+const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 3.0);
+// directionalLight.position.set(-100, 100, 100);
+directionalLight.position.set(0, 100, 50);
 directionalLight.target.position.set(0, 0, 0);
 directionalLight.castShadow = true;
 directionalLight.shadow.bias = -0.001;
@@ -137,7 +138,7 @@ directionalLight.shadow.camera.top = 50;
 directionalLight.shadow.camera.bottom = -50;
 this.scene.add(directionalLight);
 
-const ambientLight = new THREE.AmbientLight(0xFFFFFF, 3.0);
+const ambientLight = new THREE.AmbientLight(0x808080, 1);
 this.scene.add(ambientLight);
 
 
@@ -184,17 +185,40 @@ this.scene.add(plane);
 
 
 // Box
-const boxGeometry = new THREE.BoxGeometry(20, 20, 20);                               // Create a box geometry
-const boxMaterial = new THREE.MeshBasicMaterial({                          // Create a material (color) for the box
+const boxGeometry = new THREE.BoxGeometry(20, 20, 20);                              // Create a box geometry
+const boxMaterial = new THREE.MeshBasicMaterial({                                   // Create a material (color) for the box
     color: 0xFF0000
 });        
-const box = new THREE.Mesh(boxGeometry, boxMaterial);
+this.box = new THREE.Mesh(boxGeometry, boxMaterial);
 
-box.position.set(30, 10, 30);
-box.castShadow = true;
-box.receiveShadow = true;
-this.scene.add(box);
-// const element=document.getElementById("startButton");
+this.box.position.set(30, 10, 30);
+this.box.castShadow = true;
+this.box.receiveShadow = true;
+this.scene.add(this.box);
+
+//Box collider
+this.boxCollider = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());             // axis-aligned bounding box (AABB)
+this.boxCollider.setFromObject(this.box);
+console.log(this.boxCollider);
+
+
+//-----------------------Helper----------------------------
+
+const helper = new THREE.BoundingBoxHelper(this.box, 0x0000FF);
+helper.update();    
+this.scene.add(helper);
+
+//------------------------------------------------------------
+
+
+
+// <<<<<<< frontend
+// box.position.set(30, 10, 30);
+// box.castShadow = true;
+// box.receiveShadow = true;
+// this.scene.add(box);
+// // const element=document.getElementById("startButton");
+
 this._Connect();
 //------------------------------------------------------------------------------------------------
 }
@@ -214,6 +238,7 @@ _Connect() {
             target: this.controls,
         }
         this.thirdPersonCamera = new ThirdPersonCamera(params2);
+
 }
 //------------------------------------------------------------------------------------------------
     updateFrame(timeElapsed) 
@@ -224,13 +249,34 @@ _Connect() {
         {
             this.controls.Update(timeElapsedS);
         }
+
         const element=document.getElementById("startButton");
-        if(element==null)
-        this.thirdPersonCamera.Update(timeElapsedS);
-        else
+        if(element)
         {
             this.camera.position.set(0, 50, -100);
         }
+        else if(this.thirdPersonCamera)
+        {
+            this.thirdPersonCamera.Update(timeElapsedS);
+        }
+        
+        //----------------Tesing---------------------
+        //const point = this.controls.Position
+       // console.log(this.controls.Position);
+
+
+        if(this.boxCollider.intersectsSphere(this.controls.objCollider))
+        {
+            // console.log(this.controls.collisonCheck);
+            this.controls.collisonCheck = true;
+            this.box.material.color.setHex( 0xffffff );
+        }
+        else
+        {
+            this.controls.collisonCheck = false;
+            this.box.material.color.setHex( 0xff0000);
+        }
+        //------------------------------------------
     }
 }
 
