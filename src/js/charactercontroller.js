@@ -15,7 +15,10 @@ class BasicCharacterControls {
   
       this._input = new BasicCharacterControllerInput();
 
+      this.collisonCheck = false;
+
       this.LoadModel();
+      this.addCollider();
     }
 
     LoadModel(){
@@ -48,6 +51,10 @@ class BasicCharacterControls {
         }
         );
     }
+
+    addCollider(){
+        this.objCollider = new THREE.Sphere(new THREE.Vector3(10, 5, 0) , 2);
+    }
     
     get Position() {
         return this._position;
@@ -66,65 +73,84 @@ class BasicCharacterControls {
             return;
         }
 
-        const velocity = this._velocity;              
-        //---------------------* Deceleration *---------------------
-        const frameDecceleration = new THREE.Vector3(
-            velocity.x * this._decceleration.x,
-            velocity.y * this._decceleration.y,
-            velocity.z * this._decceleration.z
-        );
-    
-        //Apply the decceleration to the velocity until the velocity is 0
-        frameDecceleration.multiplyScalar(timeInSeconds);                         
-        frameDecceleration.z = Math.sign(frameDecceleration.z) * 
-                                Math.min(Math.abs(frameDecceleration.z), Math.abs(velocity.z));  // Make sure the decceleration does not exceed the velocity
-        velocity.add(frameDecceleration);
-        //-----------------------------------------------------------
+        const velocity = this._velocity;    
+        const controlObject = this._target; 
 
+        // Update the collider position
+        const idealColliderPosition = new THREE.Vector3(0, 0, 0);        
+        idealColliderPosition.applyQuaternion(controlObject.quaternion);
+        idealColliderPosition.add(controlObject.position);
+        this.objCollider.center=idealColliderPosition;
 
-        const controlObject = this._target;    
-        const _Q = new THREE.Quaternion();
-        const _A = new THREE.Vector3();
-        const _R = controlObject.quaternion.clone();
+        if(!this.collisonCheck)
+        {         
+            //---------------------* Deceleration *---------------------
+            const frameDecceleration = new THREE.Vector3(
+                velocity.x * this._decceleration.x,
+                velocity.y * this._decceleration.y,
+                velocity.z * this._decceleration.z
+            );
+        
+            //Apply the decceleration to the velocity until the velocity is 0
+            frameDecceleration.multiplyScalar(timeInSeconds);                         
+            frameDecceleration.z = Math.sign(frameDecceleration.z) * 
+                                    Math.min(Math.abs(frameDecceleration.z), Math.abs(velocity.z));  // Make sure the decceleration does not exceed the velocity
+            velocity.add(frameDecceleration);
+            //-----------------------------------------------------------
 
-        const acc = this._acceleration.clone();                                                
-        if (this._input._keys.shift) {                                       
-            acc.multiplyScalar(2.5);
+            const _Q = new THREE.Quaternion();
+            const _A = new THREE.Vector3();
+            const _R = controlObject.quaternion.clone();
+
+            const acc = this._acceleration.clone();                                                
+            if (this._input._keys.shift) {                                       
+                acc.multiplyScalar(2.5);
+            }
+            if (this._input._keys.forward){ // && !this.collisonCheck) {
+                velocity.z += acc.z * timeInSeconds;
+            }
+            if (this._input._keys.backward) {
+                velocity.z -= acc.z * timeInSeconds;
+            }
+            if (this._input._keys.left) {
+                _A.set(0, 1, 0);                                                                      // Set the axis of rotation to the y-axis
+                _Q.setFromAxisAngle(_A, Math.PI * timeInSeconds * this._acceleration.y);              // Rotate the quaternion by the angle of rotation
+                _R.multiply(_Q);                                                                      // Multiply the quaternion by the rotation quaternion
+            }
+            if (this._input._keys.right) {
+                _A.set(0, 1, 0);
+                _Q.setFromAxisAngle(_A, -Math.PI * timeInSeconds * this._acceleration.y);
+                _R.multiply(_Q);
+            }
+            controlObject.quaternion.copy(_R);                      // Set the rotation of the character to the new rotation
+        
+            const forward = new THREE.Vector3(0, 0, 1);
+            forward.applyQuaternion(controlObject.quaternion);      // To make sure the character moves in the direction it is looking at
+            forward.normalize();                                    // To make sure the character moves at the same speed in all directions, 
+                                                                    // So that diagonal movement, is not faster than horizontal or vertical movement
+        
+            const sideways = new THREE.Vector3(1, 0, 0);
+            //sideways.applyQuaternion(controlObject.quaternion);
+            sideways.normalize();
+        
+            forward.multiplyScalar(velocity.z * timeInSeconds);
+            sideways.multiplyScalar(velocity.x * timeInSeconds);
+
+            controlObject.position.add(forward);         // Add the velocity to the current position
+            controlObject.position.add(sideways);
+
         }
-        if (this._input._keys.forward) {
-            velocity.z += acc.z * timeInSeconds;
+        else{
+            //If colliding with the wall
+            const dir=Math.sign(velocity.z);
+            const idealJumpback = new THREE.Vector3(0, 0, -3*dir);
+            idealJumpback.applyQuaternion(controlObject.quaternion);
+            idealJumpback.add(controlObject.position);
+
+            const t = 1.0 - Math.pow(0.001, timeInSeconds);
+            controlObject.position.lerp(idealJumpback, t);
         }
-        if (this._input._keys.backward) {
-            velocity.z -= acc.z * timeInSeconds;
-        }
-        if (this._input._keys.left) {
-            _A.set(0, 1, 0);                                                                      // Set the axis of rotation to the y-axis
-            _Q.setFromAxisAngle(_A, Math.PI * timeInSeconds * this._acceleration.y);              // Rotate the quaternion by the angle of rotation
-            _R.multiply(_Q);                                                                      // Multiply the quaternion by the rotation quaternion
-        }
-        if (this._input._keys.right) {
-            _A.set(0, 1, 0);
-            _Q.setFromAxisAngle(_A, -Math.PI * timeInSeconds * this._acceleration.y);
-            _R.multiply(_Q);
-        }
-        controlObject.quaternion.copy(_R);                      // Set the rotation of the character to the new rotation
-    
-        const forward = new THREE.Vector3(0, 0, 1);
-        forward.applyQuaternion(controlObject.quaternion);      // To make sure the character moves in the direction it is looking at
-        forward.normalize();                                    // To make sure the character moves at the same speed in all directions, 
-                                                                // So that diagonal movement, is not faster than horizontal or vertical movement
-       
-        const sideways = new THREE.Vector3(1, 0, 0);
-        //sideways.applyQuaternion(controlObject.quaternion);
-        sideways.normalize();
-    
-        forward.multiplyScalar(velocity.z * timeInSeconds);
-        sideways.multiplyScalar(velocity.x * timeInSeconds);
-    
-        // Add the velocity to the current position
-        controlObject.position.add(forward);
-        controlObject.position.add(sideways);
-    
+
         this._position.copy(controlObject.position);
     }
 }
