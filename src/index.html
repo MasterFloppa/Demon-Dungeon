@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Basic 3D World</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="base.css">
-</head>
-<body>
-  <script>
-    function started() {
-      var elem = document.getElementById('container');
-      elem.remove();
-    }
-  </script>
-  <div id="container">
-    <div id="demontitle"><h1 style="text-align: center;">DEMON<br>DUNGEON</h1></div>
-    <button id="startButton" onclick="started()">Start</button>
-  </div>
-  <script src="./js/main.js" type="module">
-  </script>
-</body>
+    <head>
+        <title>Basic 3D World</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="base.css">
+    </head>
+    <body>
+    
+        <div id="container">
+            <div id="demontitle"><h1 style="text-align: center;">DEMON<br>DUNGEON</h1></div>
+            <button id="startButton" onclick="started()">Start</button>
+        </div>
+        
+        <script>
+            function started() {
+            var elem = document.getElementById('container');
+            elem.remove();
+            }
+        </script>
+        <script src="./js/main.js" type="module"></script>
+    </body>
 </html>
