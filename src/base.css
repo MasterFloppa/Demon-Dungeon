@@ -11,19 +11,146 @@ body {
   justify-content: center;
   align-items: center;
 }
+#container{
+  background-color: rgba(#669933,0.5);
+  flex: 1;
+}
 #startButton{
   position: absolute;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 30px;
-  line-height: 1.5;
-  color: #333;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+	display: inline-block;
+	margin:5px;
+    font-weight: bold;
+    padding: 10px 0 10px 10px ;
+    background-color: lightgray;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: gray;
+    -webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-o-border-radius: 7px;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+    font-size: 30px;
   top: 80%;
   left: 50%;
   transform: translate(-50%, -70%);
   width:25%;
-  height:10%
+  height:10%;
+  flex:100;
+  transition: text-shadow 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
+}
+#demontitle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 50px;
+  line-height: 2;
+  color: #993333;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width:90%;
+  height:30%;
+  padding-top: 10%;
+  padding-bottom: 20%;
+  flex:150;
+}
+h1{
+  text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 3px 0 grey, 1px 4px 0 grey,
+    1px 5px 0 grey, 1px 6px 0 grey, 1px 7px 0 grey, 1px 8px 0 grey,
+    5px 13px 15px black;
+    animation: jumpscare 5s;
+    animation-delay: 0s;
+    transition: text-shadow 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
+}
+/* mario title animation */
+@keyframes jumpscare {
+  0% {
+    font-size: 0px;
+    transform: translate3d(0, 0, 0);
+  }
+  45%{
+    font-size: 0px;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 20px, 0);
+  }
+  55% {
+    transform: translate3d(0, -30px, 0);
+  }
+  65% {
+    transform: translate3d(0, 40px, 0);
+  }
+  75% {
+    transform: translate3d(0, -45px, 0);
+  }
+  85% {
+    transform: translate3d(0, 60px, 0);
+    font-size: 240px;
+  }
+}
+h1:hover{
+    color: #FF0000;
+    text-shadow:
+    4px 4px 1px #300000,
+    4px 6px 1px #400000,
+    4px 8px 1px #500000,
+    4px 10px 1px #600000,
+    4px 12px 1px #700000,
+    4px 14px 1px #800000,
+    4px 16px 1px #900000,
+    4px 18px 1px #A00000,
+    4px 20px 1px #B00000,
+    4px 22px 1px #C00000,
+    4px 24px 1px #D00000,
+    4px 26px 1px #E00000,
+    4px 28px 1px #F00000,
+    4px 30px 1px #FA0000,
+    4px 32px 1px #FB0000,
+    4px 34px 1px #FC0000,
+    4px 36px 1px #FD0000,
+    4px 38px 1px #FE0000,
+    4px 40px 2px #FF0000;
+}
+#startButton:hover{
+  background-color: rgb(93, 88, 88);
+  color: #993333;
+  text-shadow:
+  4px 4px 2px #300000,
+       4px 8px 2px #400000,
+       4px 12px 2px #500000,
+       4px 16px 2px #600000,
+       4px 20px 2px #700000,
+       4px 24px 2px #800000,
+       4px 28px 2px #900000,
+       4px 32px 2px #A00000,
+       4px 36px 2px #B00000,
+       4px 40px 2px #C00000,
+       4px 44px 2px #D00000,
+       4px 48px 2px #E00000,
+       4px 52px 2px #F00000,
+       4px 56px 2px #FA0000,
+       4px 60px 2px #FB0000,
+       4px 64px 2px #FC0000,
+       4px 68px 2px #FD0000,
+       4px 72px 2px #FE0000,
+       4px 76px 2px #FF0000;
+       
+  box-shadow: 4px 4px 1px #300000,
+              4px 6px 1px #400000,
+              4px 8px 1px #500000,
+              4px 10px 1px #600000,
+              4px 12px 1px #700000,
+              4px 14px 1px #800000,
+              4px 16px 1px #900000;
 }
