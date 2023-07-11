@@ -48,7 +48,7 @@ this.camera = new THREE.PerspectiveCamera(
     0.1,
     1000
 );
-this.camera.position.set(75, 20, 0);
+this.camera.position.set(0, 50, -100);
 
 
 const controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -212,6 +212,12 @@ this.scene.add(helper);
 
 
 
+// <<<<<<< frontend
+// box.position.set(30, 10, 30);
+// box.castShadow = true;
+// box.receiveShadow = true;
+// this.scene.add(box);
+// // const element=document.getElementById("startButton");
 
 this._Connect();
 //------------------------------------------------------------------------------------------------
@@ -227,11 +233,12 @@ _Connect() {
     this.controls = new BasicCharacterControls(params);
   
     // Connect camera and target to the third person camera
-    const params2 = {
-        camera: this.camera,
-        target: this.controls,
-    }
-    //this.thirdPersonCamera = new ThirdPersonCamera(params2);
+        const params2 = {
+            camera: this.camera,
+            target: this.controls,
+        }
+        this.thirdPersonCamera = new ThirdPersonCamera(params2);
+
 }
 //------------------------------------------------------------------------------------------------
     updateFrame(timeElapsed) 
@@ -243,7 +250,12 @@ _Connect() {
             this.controls.Update(timeElapsedS);
         }
 
-        if(this.thirdPersonCamera)
+        const element=document.getElementById("startButton");
+        if(element)
+        {
+            this.camera.position.set(0, 50, -100);
+        }
+        else if(this.thirdPersonCamera)
         {
             this.thirdPersonCamera.Update(timeElapsedS);
         }
