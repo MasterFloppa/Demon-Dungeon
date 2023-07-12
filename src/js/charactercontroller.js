@@ -77,7 +77,7 @@ class BasicCharacterControls {
         const velocity = this._velocity;    
         const controlObject = this._target; 
 
-        //console.log(this.objCollider.center);
+        console.log(this.objCollider.center);
 
         // Update the collider position
         const idealColliderPosition = new THREE.Vector3(0, 0, 0);        

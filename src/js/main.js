@@ -208,7 +208,7 @@ loadPortal()
 
         let object = gltf.scene;
         object.scale.set(1.4, 1.4, 1.4);
-        object.position.set(39, 1, -20);
+        object.position.set(42, 1, -8);
 
         this.portal = object;
         this.portalCollider.center += object.position;
@@ -238,11 +238,11 @@ _Connect() {
     this.controls = new BasicCharacterControls(params);
   
     // Connect camera and target to the third person camera
-        const params2 = {
-            camera: this.camera,
-            target: this.controls,
-        }
-        this.thirdPersonCamera = new ThirdPersonCamera(params2);
+    const params2 = {
+        camera: this.camera,
+        target: this.controls,
+    }
+    this.thirdPersonCamera = new ThirdPersonCamera(params2);
 
 }
 //------------------------------------------------------------------------------------------------
