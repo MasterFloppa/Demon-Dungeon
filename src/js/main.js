@@ -187,14 +187,12 @@ plane.rotation.x = -Math.PI / 2;
 this.scene.add(plane);
 //------------------------------------------------------------------------------------------------
 
-
 this.boxCollider=createWalls(this.scene);
+this.portalCollider = new THREE.Sphere(new THREE.Vector3(0, 0, 0) , 2);
+this.gameOver=false;
 
 
-
-this.portalCollider = new THREE.Sphere(new THREE.Vector3(0, -1, 0) , 2);
 this.loadPortal();
-
 this._Connect();
 //-------------------------------------------------------------------------------------------------
 }
@@ -211,7 +209,7 @@ loadPortal()
         object.position.set(42, 1, -8);
 
         this.portal = object;
-        this.portalCollider.center += object.position;
+        this.portalCollider.center = object.position;
         this.scene.add(object);
 
     },
@@ -234,6 +232,7 @@ _Connect() {
     const params = {
         camera: this.camera,
         scene: this.scene,
+        collider: this.boxCollider,
     }
     this.controls = new BasicCharacterControls(params);
   
@@ -241,6 +240,7 @@ _Connect() {
     const params2 = {
         camera: this.camera,
         target: this.controls,
+        scene: this.scene,
     }
     this.thirdPersonCamera = new ThirdPersonCamera(params2);
 
@@ -255,32 +255,32 @@ _Connect() {
             return;
         }
 
+        if(this.portalCollider.intersectsSphere(this.controls.objCollider))
+        {
+            console.log("You win!");
+            this.gameOver=true;
+        }
+        //console.log(this.portalCollider.center);
 
-        if (this.controls) 
+
+        if (this.controls && !this.gameOver) 
         {
             this.controls.Update(timeElapsed);
         }
-        if(this.thirdPersonCamera)
+        if(this.thirdPersonCamera && this.controls && !this.gameOver)
         {
             this.thirdPersonCamera.Update(timeElapsed);
         }
-        
-        this.portal.rotation.y += timeElapsed*1.2;
-        for(let i=0; i<this.boxCollider.length; i++)
+
+        if(this.gameOver)
         {
-            if(this.boxCollider[i].intersectsSphere(this.controls.objCollider))
-            {
-                this.controls.collisonCheck = true;
-                break;
-            }
-            else
-            {
-                this.controls.collisonCheck = false;
-            }
+            //this.thirdPersonCamera._camera.position.set(0, 50, -100);
+            this.controls._target.rotation.y += timeElapsed*1.2;
         }
-        //----------------------------------------------------------
+        this.portal.rotation.y += timeElapsed*1.2;
     }
 }
+
 
 
 //--------------------------------------* ANIMATE *-----------------------------------------------
@@ -290,9 +290,19 @@ function animate(time)
     const updateDelta = world.clock.getDelta();
     world.updateFrame(updateDelta);
     
+
  
     world.renderer.render(this.scene, this.camera);
 }
 
 //------------------------------------------------------------------------------------------------
 
+const mousePosition = new THREE.Vector2();
+window.addEventListener('mousemove', (event) => {
+    mousePosition.x = event.clientX / window.innerWidth * 2 - 1;        // Convert to normalized device coordinates
+
+    mousePosition.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
+//raycaster.set(objOrigin.position, direction.subVectors(objDestin.position, objOrigin.position).normalize());
+  
