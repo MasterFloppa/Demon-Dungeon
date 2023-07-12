@@ -171,7 +171,7 @@ const soundToRender = 'evil_laugh';
 
 //--------------------------------------* OBJECTS *-------------------------------------------------
 // Plane
-const planeGeometry = new THREE.PlaneGeometry(100, 100, 10, 10);                 
+const planeGeometry = new THREE.PlaneGeometry(100, 100, 50, 50); //50 50 change                
 const planeMaterial = new THREE.MeshStandardMaterial({
     color: 0xFFFFFF,
     side: THREE.DoubleSide
