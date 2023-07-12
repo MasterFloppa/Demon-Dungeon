@@ -265,12 +265,7 @@ _Connect() {
         camera: this.camera,
         target: this.controls,
     }
-<<<<<<< Updated upstream
     //this.thirdPersonCamera = new ThirdPersonCamera(params2);
-=======
-    this.thirdPersonCamera = new ThirdPersonCamera(params2);
-
->>>>>>> Stashed changes
 }
 //------------------------------------------------------------------------------------------------
     updateFrame(timeElapsed) 
@@ -286,29 +281,18 @@ _Connect() {
         {
             this.thirdPersonCamera.Update(timeElapsedS);
         }
-<<<<<<< Updated upstream
         
-        //----------------Tesing---------------------
-        //const point = this.controls.Position
-       // console.log(this.controls.Position);
-
-
-        if(this.boxCollider.intersectsSphere(this.controls.objCollider))
-=======
-
         this.portal.rotation.y += timeElapsed*1.2;
         //---------------- Collisions Check ------------------------
         for(let i=0; i<this.boxCollider.length; i++)
->>>>>>> Stashed changes
         {
-            // console.log(this.controls.collisonCheck);
-            this.controls.collisonCheck = true;
-            this.box.material.color.setHex( 0xffffff );
-        }
-        else
-        {
-            this.controls.collisonCheck = false;
-            this.box.material.color.setHex( 0xff0000);
+            if(this.boxCollider.intersectsSphere(this.controls.objCollider)){
+                this.controls.collisonCheck = true;
+            }
+            else
+            {
+               this.controls.collisonCheck = false;
+            }
         }
         //------------------------------------------
     }

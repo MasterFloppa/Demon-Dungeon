@@ -28,11 +28,7 @@ class BasicCharacterControls {
 
             let object = gltf.scene;
             object.scale.set(1, 1, 1);
-<<<<<<< Updated upstream
-            object.position.set(10, 5, 0);
-=======
             object.position.set(-45, 4, -45);
->>>>>>> Stashed changes
 
             this._target = object;
             this._params.scene.add(object);
