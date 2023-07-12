@@ -254,9 +254,6 @@ _Connect() {
             this.camera.position.set(0, 50, -100);
             return;
         }
-
-<<<<<<< Updated upstream
-=======
         if(this.portalCollider.intersectsSphere(this.controls.objCollider))
         {
             console.log("You win!");
@@ -264,8 +261,6 @@ _Connect() {
             document.getElementById("winner").style.visibility="visible";
         }
         //console.log(this.portalCollider.center);
->>>>>>> Stashed changes
-
         if (this.controls) 
         {
             this.controls.Update(timeElapsed);
