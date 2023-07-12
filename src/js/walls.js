@@ -15,12 +15,15 @@ export function createWalls(scene)
         box[i] = new THREE.Mesh(boxGeometry, boxMaterial);
         box[i].castShadow = true;
         box[i].receiveShadow = true;
-        box[i].position.set(50, 50, 0);
+
+        //box[i].position.set(50, 50, 0);
+
         scene.add(box[i]);
     }
 
 //-------------------------------* Positioning the walls *--------------------------------------------
-    //maze walls
+
+   //maze walls
    //box[0].position.set(30, 10, 30);
     // box[7].scale.set(1, 1, 1);
     box[0].position.set(50, 10, 0); 
@@ -65,6 +68,7 @@ export function createWalls(scene)
     box[19].scale.set(0.1, 1, 1.1);   //center top vertical wall
     box[20].position.set(-6, 10, 35); 
     box[20].scale.set(1, 1, 0.1);   //center top horizontal wall
+
 
 
 //------------------------------------------------------------------------------------------------

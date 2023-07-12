@@ -9,6 +9,9 @@ import { BasicCharacterControls, BasicCharacterControllerInput  } from "./charac
 //--------------------------------------* ThirdPersonCamera *----------------------------------------
 import { ThirdPersonCamera } from "./tpcamera.js";
 
+//--------------------------------------* WALLS *------------------------------------------------
+import { createWalls } from './walls.js';
+
 
 
 //------------------------------------------------* MAIN *--------------------------------------------
@@ -182,48 +185,50 @@ plane.castShadow = false;
 plane.receiveShadow = true;
 plane.rotation.x = -Math.PI / 2;
 this.scene.add(plane);
+//------------------------------------------------------------------------------------------------
 
 
-// Box
-const boxGeometry = new THREE.BoxGeometry(20, 20, 20);                              // Create a box geometry
-const boxMaterial = new THREE.MeshBasicMaterial({                                   // Create a material (color) for the box
-    color: 0xFF0000
-});        
-this.box = new THREE.Mesh(boxGeometry, boxMaterial);
-
-this.box.position.set(30, 10, 30);
-this.box.castShadow = true;
-this.box.receiveShadow = true;
-this.scene.add(this.box);
-
-//Box collider
-this.boxCollider = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());             // axis-aligned bounding box (AABB)
-this.boxCollider.setFromObject(this.box);
-console.log(this.boxCollider);
-
-
-//-----------------------Helper----------------------------
-
-const helper = new THREE.BoundingBoxHelper(this.box, 0x0000FF);
-helper.update();    
-this.scene.add(helper);
-
-//------------------------------------------------------------
+this.boxCollider=createWalls(this.scene);
 
 
 
-// <<<<<<< frontend
-// box.position.set(30, 10, 30);
-// box.castShadow = true;
-// box.receiveShadow = true;
-// this.scene.add(box);
-// // const element=document.getElementById("startButton");
+this.portalCollider = new THREE.Sphere(new THREE.Vector3(0, -1, 0) , 2);
+this.loadPortal();
 
 this._Connect();
-//------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 }
 
-//--------------------------------------* CONNECTIONS *------------------------------------------------
+//----------------------------------------* Portal *-----------------------------------------------
+loadPortal()
+{
+    let objToRender = 'magic_ring';
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load(`../../models/${objToRender}/scene.gltf`, (gltf) =>  {
+
+        let object = gltf.scene;
+        object.scale.set(1.4, 1.4, 1.4);
+        object.position.set(39, 1, -20);
+
+        this.portal = object;
+        this.portalCollider.center += object.position;
+        this.scene.add(object);
+
+    },
+    function (xhr) {
+    //While it is loading, log the progress
+        console.log('Portal ' + (xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function (error) {
+    //If there is an error, log it
+        console.error(error);
+    }
+    );
+}
+
+//--------------------------------------------------------------------------------------------------
+
+//-------------------------------------* CONNECTIONS *----------------------------------------------
 _Connect() {
     // Connect camera and scene to the controls
     const params = {
@@ -243,40 +248,37 @@ _Connect() {
 //------------------------------------------------------------------------------------------------
     updateFrame(timeElapsed) 
     {
-        const timeElapsedS = timeElapsed; // * 0.001;
-
-        if (this.controls) 
-        {
-            this.controls.Update(timeElapsedS);
-        }
-
         const element=document.getElementById("startButton");
         if(element)
         {
             this.camera.position.set(0, 50, -100);
+            return;
         }
-        else if(this.thirdPersonCamera)
+
+
+        if (this.controls) 
         {
-            this.thirdPersonCamera.Update(timeElapsedS);
+            this.controls.Update(timeElapsed);
+        }
+        if(this.thirdPersonCamera)
+        {
+            this.thirdPersonCamera.Update(timeElapsed);
         }
         
-        //----------------Tesing---------------------
-        //const point = this.controls.Position
-       // console.log(this.controls.Position);
-
-
-        if(this.boxCollider.intersectsSphere(this.controls.objCollider))
+        this.portal.rotation.y += timeElapsed*1.2;
+        for(let i=0; i<this.boxCollider.length; i++)
         {
-            // console.log(this.controls.collisonCheck);
-            this.controls.collisonCheck = true;
-            this.box.material.color.setHex( 0xffffff );
+            if(this.boxCollider[i].intersectsSphere(this.controls.objCollider))
+            {
+                this.controls.collisonCheck = true;
+                break;
+            }
+            else
+            {
+                this.controls.collisonCheck = false;
+            }
         }
-        else
-        {
-            this.controls.collisonCheck = false;
-            this.box.material.color.setHex( 0xff0000);
-        }
-        //------------------------------------------
+        //----------------------------------------------------------
     }
 }
 
