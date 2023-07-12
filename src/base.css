@@ -44,6 +44,33 @@ body {
     transition: color 0.5s ease-in-out;
 }
 
+#instructions{
+  position: absolute;
+    text-align: center;
+	display: inline-block;
+	margin:5px;
+    font-weight: bold;
+    padding: 10px 0 10px 10px ;
+    background-color: lightgray;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: gray;
+    -webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-o-border-radius: 7px;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+    font-size: 30px;
+    top: 97%;
+    left: 50%;
+    transform: translate(-50%, -97%);
+    width:15%;
+    height:10%;
+    flex:100;
+    transition: text-shadow 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
+}
+
 #demontitle{
     display: flex;
     justify-content: center;
@@ -60,7 +87,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width:90%;
+    width:40%;
     height:30%;
     padding-top: 10%;
     padding-bottom: 20%;
@@ -81,34 +108,148 @@ h1{
     animation-delay: 0s;
     transition: text-shadow 0.5s ease-in-out;
     transition: color 0.5s ease-in-out;
+    flex:150;
 }
 
+#ctrl{
+  animation: none;
+}
+
+#controls{
+  position: absolute;
+  visibility:hidden;
+  width: 16.67%;
+  height:50%;
+  font-size: 30px;
+  line-gap-override: 20px;
+  background-color: #555;
+  color: #fff;
+  border-radius: 6px;
+  padding: 8px 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow:2px 4px 2px #300000,
+                /* 4px 8px 2px #400000, */
+                2px 8px 2px #500000,
+                /* 4px 16px 2px #600000, */
+                2px 12px 2px #700000,
+                /* 4px 24px 2px #800000, */
+                2px 16px 2px #900000,
+                /* 4px 32px 2px #A00000, */
+                2px 20px 2px #B00000;
+  flex: 200;
+}
+
+#backButton{
+  position: absolute;
+    text-align: center;
+	display: inline-block;
+	margin:5px;
+    font-weight: bold;
+    padding: 10px 0 10px 10px ;
+    background-color: lightgray;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: gray;
+    -webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-o-border-radius: 7px;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+    top: 5%;
+    left: 81%;
+    transform: translate(-50%, -50%);
+    width:30%;
+    height:10%;
+    transition: text-shadow 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
+    flex: 201;
+}
+
+#winner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    color: #FF0000;
+    visibility: hidden;
+}
+
+#restartButton{
+    position: absolute;
+    text-align: center;
+  display: absolute;
+  margin:5px;
+    font-weight: bold;
+    padding: 10px 0 10px 10px ;
+    background-color: lightgray;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: gray;
+    -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -o-border-radius: 7px;
+  border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+    font-size: 30px;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -90%);
+    width:25%;
+    height:10%;
+    flex:100;
+    transition: text-shadow 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
+    
+}
 /* mario title animation */
 @keyframes jumpscare {
   0% {
     font-size: 0px;
     transform: translate3d(0, 0, 0);
   }
-  45%{
+  50%{
     font-size: 0px;
     transform: translate3d(0, 0, 0);
   }
-  50% {
+  55% {
     transform: translate3d(0, 20px, 0);
   }
-  55% {
+  60% {
     transform: translate3d(0, -30px, 0);
   }
-  65% {
+  70% {
     transform: translate3d(0, 40px, 0);
   }
-  75% {
+  80% {
     transform: translate3d(0, -45px, 0);
   }
-  85% {
+  90% {
     transform: translate3d(0, 60px, 0);
     font-size: 200px;
 
+  }
+}
+
+
+
+@keyframes fadeout{
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+@keyframes fadein{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
   }
 }
 
@@ -135,7 +276,7 @@ h1:hover{
                 4px 40px 2px #FF0000;
 }
 
-#startButton:hover{
+#startButton:hover, #restartButton:hover{
     background-color: #020000;
     color: #c13030;
     text-shadow:2px 4px 2px #300000,
@@ -165,5 +306,11 @@ h1:hover{
                 4px 12px 1px #700000,
                 4px 14px 1px #800000,
                 4px 16px 1px #900000;
+
+}
+
+#backButton:hover, #instructions:hover{
+    background-color: #020000;
+    color: #c13030;
 
 }
