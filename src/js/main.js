@@ -9,6 +9,9 @@ import { BasicCharacterControls, BasicCharacterControllerInput  } from "./charac
 //--------------------------------------* ThirdPersonCamera *----------------------------------------
 import { ThirdPersonCamera } from "./tpcamera.js";
 
+//--------------------------------------* WALLS *------------------------------------------------
+import { createWalls } from './walls.js';
+
 
 
 //------------------------------------------------* MAIN *--------------------------------------------
@@ -48,7 +51,7 @@ this.camera = new THREE.PerspectiveCamera(
     0.1,
     1000
 );
-this.camera.position.set(75, 20, 0);
+this.camera.position.set(0, 50, -100);
 
 
 const controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -182,36 +185,10 @@ plane.castShadow = false;
 plane.receiveShadow = true;
 plane.rotation.x = -Math.PI / 2;
 this.scene.add(plane);
+//------------------------------------------------------------------------------------------------
 
 
-// Box
-const boxGeometry = new THREE.BoxGeometry(20, 20, 20);                              // Create a box geometry
-const boxMaterial = new THREE.MeshBasicMaterial({                                   // Create a material (color) for the box
-    color: 0xFF0000
-});        
-this.box = new THREE.Mesh(boxGeometry, boxMaterial);
-
-this.box.position.set(30, 10, 30);
-this.box.castShadow = true;
-this.box.receiveShadow = true;
-this.scene.add(this.box);
-
-//Box collider
-this.boxCollider = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());             // axis-aligned bounding box (AABB)
-this.boxCollider.setFromObject(this.box);
-console.log(this.boxCollider);
-
-
-//-----------------------Helper----------------------------
-
-const helper = new THREE.BoundingBoxHelper(this.box, 0x0000FF);
-helper.update();    
-this.scene.add(helper);
-
-//------------------------------------------------------------
-
-
-
+this.boxCollider=createWalls(this.scene);
 
 
 
@@ -261,40 +238,47 @@ _Connect() {
     this.controls = new BasicCharacterControls(params);
   
     // Connect camera and target to the third person camera
-    const params2 = {
-        camera: this.camera,
-        target: this.controls,
-    }
-    //this.thirdPersonCamera = new ThirdPersonCamera(params2);
+        const params2 = {
+            camera: this.camera,
+            target: this.controls,
+        }
+        this.thirdPersonCamera = new ThirdPersonCamera(params2);
+
 }
 //------------------------------------------------------------------------------------------------
     updateFrame(timeElapsed) 
     {
-        const timeElapsedS = timeElapsed; // * 0.001;
+        const element=document.getElementById("startButton");
+        if(element)
+        {
+            this.camera.position.set(0, 50, -100);
+            return;
+        }
+
 
         if (this.controls) 
         {
-            this.controls.Update(timeElapsedS);
+            this.controls.Update(timeElapsed);
         }
-
         if(this.thirdPersonCamera)
         {
-            this.thirdPersonCamera.Update(timeElapsedS);
+            this.thirdPersonCamera.Update(timeElapsed);
         }
         
         this.portal.rotation.y += timeElapsed*1.2;
-        //---------------- Collisions Check ------------------------
         for(let i=0; i<this.boxCollider.length; i++)
         {
-            if(this.boxCollider.intersectsSphere(this.controls.objCollider)){
+            if(this.boxCollider[i].intersectsSphere(this.controls.objCollider))
+            {
                 this.controls.collisonCheck = true;
+                break;
             }
             else
             {
-               this.controls.collisonCheck = false;
+                this.controls.collisonCheck = false;
             }
         }
-        //------------------------------------------
+        //----------------------------------------------------------
     }
 }
 

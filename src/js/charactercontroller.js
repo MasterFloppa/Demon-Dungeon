@@ -28,6 +28,7 @@ class BasicCharacterControls {
 
             let object = gltf.scene;
             object.scale.set(1, 1, 1);
+
             object.position.set(-45, 4, -45);
 
             this._target = object;
@@ -75,6 +76,8 @@ class BasicCharacterControls {
 
         const velocity = this._velocity;    
         const controlObject = this._target; 
+
+        //console.log(this.objCollider.center);
 
         // Update the collider position
         const idealColliderPosition = new THREE.Vector3(0, 0, 0);        

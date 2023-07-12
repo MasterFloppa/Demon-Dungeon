@@ -21,8 +21,6 @@ export function createWalls(scene)
 
 //-------------------------------* Positioning the walls *--------------------------------------------
 
-    // box[0].position.set(30, 10, 30);
-    // box[0].scale.set(1, 1, 1);
     
 
 
