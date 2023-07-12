@@ -68,10 +68,16 @@ body {
 }
 
 h1{
-    text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 3px 0 grey, 1px 4px 0 grey,
-    1px 5px 0 grey, 1px 6px 0 grey, 1px 7px 0 grey, 1px 8px 0 grey,
+    text-shadow: 1px 1px 0 grey, 
+                1px 2px 0 grey, 
+                1px 3px 0 grey, 
+                1px 4px 0 grey,
+    1px 5px 0 grey, 
+    1px 6px 0 grey, 
+    1px 7px 0 grey, 1px 8px 0 grey,
     5px 13px 15px black;
-    animation: jumpscare 4s;
+    animation: jumpscare 3s;
+
     animation-delay: 0s;
     transition: text-shadow 0.5s ease-in-out;
     transition: color 0.5s ease-in-out;
@@ -101,7 +107,8 @@ h1{
   }
   85% {
     transform: translate3d(0, 60px, 0);
-    font-size: 240px;
+    font-size: 200px;
+
   }
 }
 
@@ -158,4 +165,5 @@ h1:hover{
                 4px 12px 1px #700000,
                 4px 14px 1px #800000,
                 4px 16px 1px #900000;
+
 }

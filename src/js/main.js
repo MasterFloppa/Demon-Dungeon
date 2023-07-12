@@ -190,11 +190,45 @@ this.scene.add(plane);
 
 this.boxCollider=createWalls(this.scene);
 
+
+
+this.portalCollider = new THREE.Sphere(new THREE.Vector3(0, -1, 0) , 2);
+this.loadPortal();
+
 this._Connect();
-//------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 }
 
-//--------------------------------------* CONNECTIONS *------------------------------------------------
+//----------------------------------------* Portal *-----------------------------------------------
+loadPortal()
+{
+    let objToRender = 'magic_ring';
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load(`../../models/${objToRender}/scene.gltf`, (gltf) =>  {
+
+        let object = gltf.scene;
+        object.scale.set(1.4, 1.4, 1.4);
+        object.position.set(39, 1, -20);
+
+        this.portal = object;
+        this.portalCollider.center += object.position;
+        this.scene.add(object);
+
+    },
+    function (xhr) {
+    //While it is loading, log the progress
+        console.log('Portal ' + (xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function (error) {
+    //If there is an error, log it
+        console.error(error);
+    }
+    );
+}
+
+//--------------------------------------------------------------------------------------------------
+
+//-------------------------------------* CONNECTIONS *----------------------------------------------
 _Connect() {
     // Connect camera and scene to the controls
     const params = {
@@ -231,7 +265,7 @@ _Connect() {
             this.thirdPersonCamera.Update(timeElapsed);
         }
         
-        //---------------- Collisions Check ------------------------
+        this.portal.rotation.y += timeElapsed*1.2;
         for(let i=0; i<this.boxCollider.length; i++)
         {
             if(this.boxCollider[i].intersectsSphere(this.controls.objCollider))

@@ -28,7 +28,8 @@ class BasicCharacterControls {
 
             let object = gltf.scene;
             object.scale.set(1, 1, 1);
-            object.position.set(-45, 5, -45);
+
+            object.position.set(-45, 4, -45);
 
             this._target = object;
             this._params.scene.add(object);
@@ -43,7 +44,7 @@ class BasicCharacterControls {
         },
         function (xhr) {
         //While it is loading, log the progress
-            console.log('Model ' + (xhr.loaded / xhr.total * 100) + '% loaded');
+            console.log('Character ' + (xhr.loaded / xhr.total * 100) + '% loaded');
         },
         function (error) {
         //If there is an error, log it
