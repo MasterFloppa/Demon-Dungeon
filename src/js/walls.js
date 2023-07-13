@@ -21,8 +21,8 @@ export function createWalls(scene)
 
 //-------------------------------* Positioning the walls *--------------------------------------------
 
-    // const bg = new THREE.TextureLoader().load('../../images/negx.jpg'); 
-    // box[0].material.map=  bg;
+    const bg = new THREE.TextureLoader().load('../../images/wall.jpg'); 
+    box[0].material.map=  bg;
 
     box[0].position.set(50, 10, 0); 
     box[0].scale.set(0.1, 1, 5);    //left wall

@@ -179,9 +179,11 @@ this.finishSound = sound2;
 
 //--------------------------------------* OBJECTS *-------------------------------------------------
 // Plane
+const floor = new THREE.TextureLoader().load('../../images/floor.jpg'); 
 const planeGeometry = new THREE.PlaneGeometry(100, 100, 50, 50); //50 50 change                
 const planeMaterial = new THREE.MeshStandardMaterial({
-    color: 0xFFFFFF,
+    color: 0xa30d1b,
+    map: floor,
     side: THREE.DoubleSide
 });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
