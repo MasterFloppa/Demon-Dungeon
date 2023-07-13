@@ -145,18 +145,11 @@ const ambientLight = new THREE.AmbientLight(0x808080, 1);
 this.scene.add(ambientLight);
 
 
-
-//-----------------------------------------
-//FOG
-//scene.fog = new THREE.Fog(0xFFFFFF, 10, 200);            // 10 is the near clipping plane, 200 is the far clipping plane
-//scene.fog = new THREE.FogExp2(0x888888, 0.01);           // (color, density)
-
 //------------------------------------------------------------------------------------------------
 
 
 
 //--------------------------------------* AUDIO *-------------------------------------------------
-
 const listener = new THREE.AudioListener();
 this.camera.add(listener);
 const audioLoader = new THREE.AudioLoader();
@@ -170,6 +163,7 @@ const soundToRender = 'evil_laugh';
 // });
 
 //-------------------------------------------------------------------------------------------------
+
 
 
 //--------------------------------------* OBJECTS *-------------------------------------------------
@@ -187,15 +181,16 @@ plane.rotation.x = -Math.PI / 2;
 this.scene.add(plane);
 //------------------------------------------------------------------------------------------------
 
+
 this.boxCollider=createWalls(this.scene);
 this.portalCollider = new THREE.Sphere(new THREE.Vector3(0, 0, 0) , 2);
 this.gameOver=false;
-
 
 this.loadPortal();
 this._Connect();
 //-------------------------------------------------------------------------------------------------
 }
+
 
 //----------------------------------------* Portal *-----------------------------------------------
 loadPortal()
@@ -225,6 +220,8 @@ loadPortal()
 }
 
 //--------------------------------------------------------------------------------------------------
+
+
 
 //-------------------------------------* CONNECTIONS *----------------------------------------------
 _Connect() {
@@ -297,12 +294,4 @@ function animate(time)
 
 //------------------------------------------------------------------------------------------------
 
-const mousePosition = new THREE.Vector2();
-window.addEventListener('mousemove', (event) => {
-    mousePosition.x = event.clientX / window.innerWidth * 2 - 1;        // Convert to normalized device coordinates
-
-    mousePosition.y = -(event.clientY / window.innerHeight) * 2 + 1;
-});
-
-//raycaster.set(objOrigin.position, direction.subVectors(objDestin.position, objOrigin.position).normalize());
   

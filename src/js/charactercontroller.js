@@ -27,7 +27,7 @@ class BasicCharacterControls {
         gltfLoader.load(`../../models/${objToRender}/scene.gltf`, (gltf) =>  {
 
             let object = gltf.scene;
-            object.scale.set(0.8, 0.8, 0.8);
+            object.scale.set(0.7, 0.8, 0.8);
 
             object.position.set(-41, 4, -41);
 
