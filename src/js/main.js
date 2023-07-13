@@ -191,15 +191,14 @@ plane.receiveShadow = true;
 plane.rotation.x = -Math.PI / 2;
 this.scene.add(plane);
 
-// Plane2
-
+// Plane 2
 const bg = new THREE.TextureLoader().load('../../images/DemonGates.jpg');       
 const planeMaterial2 = new THREE.MeshStandardMaterial({
     map: bg,
 });
-const plane2 = new THREE.Mesh(planeGeometry, planeMaterial2);
-plane2.position.set(0, 50, -130);
-this.scene.add(plane2);
+this.homebg = new THREE.Mesh(planeGeometry, planeMaterial2);
+this.homebg.position.set(0, 50, -130);
+this.scene.add(this.homebg);
 
 //------------------------------------------------------------------------------------------------
 
@@ -273,6 +272,8 @@ _Connect() {
             this.camera.position.set(0, 50, -100);
             return;
         }
+
+        this.homebg.visible = false;
 
         if(this.portal)
             this.portal.rotation.y += timeElapsed*1.2;
