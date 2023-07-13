@@ -252,15 +252,15 @@ _Connect() {
             return;
         }
 
+      
         if(this.portalCollider.intersectsSphere(this.controls.objCollider))
         {
             console.log("You win!");
             this.gameOver=true;
+            document.getElementById("winner").style.visibility="visible";
         }
         //console.log(this.portalCollider.center);
-
-
-        if (this.controls && !this.gameOver) 
+        if (this.controls) 
         {
             this.controls.Update(timeElapsed);
         }

@@ -8,14 +8,36 @@
     <body>
     
         <div id="container">
-            <div id="demontitle"><h1 style="text-align: center;">DEMON<br>DUNGEON</h1></div>
+            <div id="demontitle"><h1 style="text-align: center;" id="dem">DEMON<br>DUNGEON</h1></div>
             <button id="startButton" onclick="started()">Start</button>
+            <button id="instructions" onclick="revelcont()">Controls</button>
         </div>
-        
+        <div id="winner">
+            <h1 style="text-align: center;" id="win">YOU WIN!</h1>
+            <button id="restartButton" onclick="relo()">Restart</button>
+        </div>
+        <div id="controls">
+            <h1 style="text-align: center;" id="ctrl">Controls</h1>
+            <p style="text-align: center;" id="ctrl">WASD to move</p>
+            <p style="text-align: center;" id="ctrl">Space to jump</p>
+            <p style="text-align: center;" id="ctrl">shift to sprint</p>
+            <button id="backButton" onclick="disapcont()">Back</button>
+        </div>
         <script>
             function started() {
-            var elem = document.getElementById('container');
-            elem.remove();
+                var elem = document.getElementById('container');
+                elem.remove();
+            }
+            function relo() {
+                location.reload();
+            }
+            function revelcont() {
+                var elem = document.getElementById('controls');
+                elem.style.visibility = 'visible';
+            }
+            function disapcont() {
+                var elem = document.getElementById('controls');
+                elem.style.visibility = 'hidden';
             }
         </script>
         <script src="./js/main.js" type="module"></script>
