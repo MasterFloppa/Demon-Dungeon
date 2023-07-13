@@ -116,7 +116,7 @@ h1{
   animation: none;
 }
 
-#controls{
+#controls, #about{
   position: absolute;
   visibility:hidden;
   width: 16.67%;
@@ -204,6 +204,33 @@ h1{
     transition: text-shadow 0.5s ease-in-out;
     transition: color 0.5s ease-in-out;
     
+}
+
+#credits{
+  position: absolute;
+    text-align: center;
+	display: inline-block;
+	margin:5px;
+    font-weight: bold;
+    padding: 10px 0 10px 10px ;
+    background-color: lightgray;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: gray;
+    -webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-o-border-radius: 7px;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+    font-size: 30px;
+    top: 97%;
+    left: 97%;
+    transform: translate(-97%, -97%);
+    width:13%;
+    height:9%;
+    flex:100;
+    transition: text-shadow 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
 }
 /* mario title animation */
 @keyframes jumpscare {
@@ -329,7 +356,7 @@ h1:hover{
 
 }
 
-#instructions:hover{
+#instructions:hover, #credits:hover{
   background-color: #020000;
     color: #c13030;
     text-shadow:2px 4px 2px #300000,

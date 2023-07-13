@@ -11,6 +11,7 @@
             <div id="demontitle"><h1 style="text-align: center;" id="dem">DEMON<br>DUNGEON</h1></div>
             <button id="startButton" onclick="started()">Start</button>
             <button id="instructions" onclick="revelcont()">Controls</button>
+            <button id="credits" onclick="revelcont2()">About</button>
         </div>
         <div id="winner">
             <h1 style="text-align: center;" id="win">YOU WIN!</h1>
@@ -20,6 +21,9 @@
             <h1 style="text-align: center;" id="ctrl">Controls</h1>
             <p style="text-align: center;" id="ctrl">W, A, S, D to move</p>
             <p style="text-align: center;" id="ctrl">Shift to sprint</p>
+            <button id="backButton" onclick="disapcont()">X</button>
+        </div>
+        <div id="about">
             <button id="backButton" onclick="disapcont()">X</button>
         </div>
         <script>
@@ -36,9 +40,15 @@
                 elem.style.visibility = 'visible';
                 document.getElementById('container').style.visibility = 'hidden';
             }
+            function revelcont2() {
+                var elem = document.getElementById('about');
+                elem.style.visibility = 'visible';
+                document.getElementById('container').style.visibility = 'hidden';
+            }
             function disapcont() {
                 var elem = document.getElementById('controls');
                 elem.style.visibility = 'hidden';
+                document.getElementById('about').style.visibility = 'hidden';
                 document.getElementById('container').style.visibility = 'visible';
             }
         </script>
