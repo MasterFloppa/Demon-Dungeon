@@ -116,7 +116,8 @@ h1{
   animation: none;
 }
 
-#controls, #about{
+#control
+{
   position: absolute;
   visibility:hidden;
   width: 16.67%;
@@ -141,6 +142,36 @@ h1{
                 2px 20px 2px #B00000;
   flex: 200;
 }
+
+#about
+{
+  position: absolute;
+  visibility:hidden;
+  width: 30%;
+  height: 60%;
+  font-size: 30px;
+  line-gap-override: 10px;
+  background-color: #989393c1;
+  color: #fff;
+  border-radius: 6px;
+  padding: 8px 3px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow:2px 4px 2px #300000,
+                /* 4px 8px 2px #400000, */
+                2px 8px 2px #500000,
+                /* 4px 16px 2px #600000, */
+                2px 12px 2px #700000,
+                /* 4px 24px 2px #800000, */
+                2px 16px 2px #900000,
+                /* 4px 32px 2px #A00000, */
+                2px 20px 2px #B00000;
+  flex: 200;
+}
+
+
+
 
 #backButton{
     position: absolute;
