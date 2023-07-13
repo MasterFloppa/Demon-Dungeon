@@ -5,7 +5,8 @@ export function createWalls(scene)
     // Box
     const boxGeometry = new THREE.BoxBufferGeometry(20, 20, 20);       
     const boxMaterial = new THREE.MeshBasicMaterial({                                   
-        color: 0xFF0000
+        color: 0xFF0000,
+        //map: textureLoader.load(),
     });        
     
     //Box array

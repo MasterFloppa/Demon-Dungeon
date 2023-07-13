@@ -79,7 +79,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-size: 50px;
     line-height: 2;
-    color: #993333;
+    color: #150c0c;
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
@@ -95,16 +95,17 @@ body {
 }
 
 h1{
-    text-shadow: 1px 1px 0 grey, 
+    text-shadow: 
+                1px 1px 0 grey, 
                 1px 2px 0 grey, 
                 1px 3px 0 grey, 
                 1px 4px 0 grey,
-    1px 5px 0 grey, 
-    1px 6px 0 grey, 
-    1px 7px 0 grey, 1px 8px 0 grey,
+                1px 5px 0 grey, 
+                1px 6px 0 grey, 
+                1px 7px 0 grey, 
+                1px 8px 0 grey,
     5px 13px 15px black;
     animation: jumpscare 3s;
-
     animation-delay: 0s;
     transition: text-shadow 0.5s ease-in-out;
     transition: color 0.5s ease-in-out;
@@ -119,7 +120,7 @@ h1{
   position: absolute;
   visibility:hidden;
   width: 16.67%;
-  height:50%;
+  height:60%;
   font-size: 30px;
   line-gap-override: 20px;
   background-color: #555;
@@ -142,12 +143,12 @@ h1{
 }
 
 #backButton{
-  position: absolute;
+    position: absolute;
     text-align: center;
-	display: inline-block;
-	margin:5px;
+    display: inline-block;
+    margin:5px;
     font-weight: bold;
-    padding: 10px 0 10px 10px ;
+    padding: 10px 10px 10px 10px ;
     background-color: lightgray;
     text-shadow: -1px -1px black, 1px 1px white;
     color: gray;
@@ -158,9 +159,9 @@ h1{
     box-shadow: 0 .2em gray; 
     cursor: pointer;
     top: 5%;
-    left: 81%;
+    left: 85%;
     transform: translate(-50%, -50%);
-    width:30%;
+    width:20%;
     height:10%;
     transition: text-shadow 0.5s ease-in-out;
     transition: color 0.5s ease-in-out;
@@ -254,7 +255,7 @@ h1{
 }
 
 h1:hover{
-    color: #FF0000;
+    color: #e81f1f;
     text-shadow:4px 4px 1px #300000,
                 4px 6px 1px #400000,
                 4px 8px 1px #500000,

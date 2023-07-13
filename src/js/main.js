@@ -52,10 +52,11 @@ this.camera = new THREE.PerspectiveCamera(
     1000
 );
 this.camera.position.set(0, 50, -100);
+this.camera.lookAt(0, 50, -105);
 
 
-const controls = new OrbitControls(this.camera, this.renderer.domElement);
-controls.update();        // Does nothing?!
+// const controls = new OrbitControls(this.camera, this.renderer.domElement);
+// controls.update();        // Does nothing?!
 
 
 // Clock
@@ -154,12 +155,12 @@ const listener = new THREE.AudioListener();
 this.camera.add(listener);
 const audioLoader = new THREE.AudioLoader();
 
-const sound = new THREE.Audio(listener);
-const soundToRender = 'evil_laugh';
-// audioLoader.load(`audio/soundToRender.mp3`, function (buffer) {
-//   sound.setBuffer(buffer);
-//   sound.setVolume(1);
-//   sound.setLoop(true);
+this.sound = new THREE.Audio(listener);
+// const soundToRender = 'scary';
+// audioLoader.load(`../../Audio/${soundToRender}.mp3`, function (buffer) {
+//     this.sound.setBuffer(buffer);
+//     this.sound.setVolume(1);
+//     this.sound.setLoop(true);
 // });
 
 //-------------------------------------------------------------------------------------------------
@@ -179,6 +180,17 @@ plane.castShadow = false;
 plane.receiveShadow = true;
 plane.rotation.x = -Math.PI / 2;
 this.scene.add(plane);
+
+// Plane2
+
+const bg = new THREE.TextureLoader().load('../../images/DemonGates.jpg');       
+const planeMaterial2 = new THREE.MeshStandardMaterial({
+    map: bg,
+});
+const plane2 = new THREE.Mesh(planeGeometry, planeMaterial2);
+plane2.position.set(0, 50, -130);
+this.scene.add(plane2);
+
 //------------------------------------------------------------------------------------------------
 
 
@@ -245,21 +257,33 @@ _Connect() {
 //------------------------------------------------------------------------------------------------
     updateFrame(timeElapsed) 
     {
-        const element=document.getElementById("startButton");
+        const element=document.getElementById("container");
         if(element)
         {
             this.camera.position.set(0, 50, -100);
             return;
         }
 
-      
+        if(this.portal)
+            this.portal.rotation.y += timeElapsed*1.2;
+        if(this.gameOver)
+        {
+            this.controls._target.rotation.y += timeElapsed*1.2;
+            return;
+        }
+        
+        if(!this.sound.isPlaying)
+            this.sound.play();
+
         if(this.portalCollider.intersectsSphere(this.controls.objCollider))
         {
             console.log("You win!");
             this.gameOver=true;
+            //this.camera.position.x=-10;
             document.getElementById("winner").style.visibility="visible";
         }
-        //console.log(this.portalCollider.center);
+
+
         if (this.controls) 
         {
             this.controls.Update(timeElapsed);
@@ -268,13 +292,6 @@ _Connect() {
         {
             this.thirdPersonCamera.Update(timeElapsed);
         }
-
-        if(this.gameOver)
-        {
-            //this.thirdPersonCamera._camera.position.set(0, 50, -100);
-            this.controls._target.rotation.y += timeElapsed*1.2;
-        }
-        this.portal.rotation.y += timeElapsed*1.2;
     }
 }
 
@@ -286,8 +303,6 @@ function animate(time)
     // Update the controls
     const updateDelta = world.clock.getDelta();
     world.updateFrame(updateDelta);
-    
-
  
     world.renderer.render(this.scene, this.camera);
 }
