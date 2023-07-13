@@ -155,13 +155,23 @@ const listener = new THREE.AudioListener();
 this.camera.add(listener);
 const audioLoader = new THREE.AudioLoader();
 
-this.sound = new THREE.Audio(listener);
-// const soundToRender = 'scary';
-// audioLoader.load(`../../Audio/${soundToRender}.mp3`, function (buffer) {
-//     this.sound.setBuffer(buffer);
-//     this.sound.setVolume(1);
-//     this.sound.setLoop(true);
-// });
+const sound = new THREE.Audio(listener);
+let soundToRender = 'scary';
+audioLoader.load(`../../Audio/${soundToRender}.mp3`, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setVolume(1);
+    sound.setLoop(true);
+});
+this.bgSound = sound;
+
+const sound2 = new THREE.Audio(listener);
+soundToRender = 'Finish';
+audioLoader.load(`../../Audio/${soundToRender}.mp3`, function (buffer) {
+    sound2.setBuffer(buffer);
+    sound2.setVolume(2);
+    sound2.setLoop(true);
+});
+this.finishSound = sound2;
 
 //-------------------------------------------------------------------------------------------------
 
@@ -269,17 +279,24 @@ _Connect() {
         if(this.gameOver)
         {
             this.controls._target.rotation.y += timeElapsed*1.2;
+
+            if(this.bgSound && this.bgSound.isPlaying)
+                this.bgSound.stop();
+
+            if(this.finishSound && !this.finishSound.isPlaying)
+                this.finishSound.play();
+
             return;
         }
         
-        if(!this.sound.isPlaying)
-            this.sound.play();
+        if(this.bgSound && !this.bgSound.isPlaying)
+            this.bgSound.play();
 
         if(this.portalCollider.intersectsSphere(this.controls.objCollider))
         {
             console.log("You win!");
             this.gameOver=true;
-            //this.camera.position.x=-10;
+            this.camera.position.z -= 3;
             document.getElementById("winner").style.visibility="visible";
         }
 
