@@ -15,9 +15,6 @@ export function createWalls(scene)
         box[i] = new THREE.Mesh(boxGeometry, boxMaterial);
         box[i].castShadow = true;
         box[i].receiveShadow = true;
-
-        //box[i].position.set(50, 50, 0);
-
         scene.add(box[i]);
     }
 
