@@ -52,10 +52,11 @@ this.camera = new THREE.PerspectiveCamera(
     1000
 );
 this.camera.position.set(0, 50, -100);
+this.camera.lookAt(0, 50, -105);
 
 
-const controls = new OrbitControls(this.camera, this.renderer.domElement);
-controls.update();        // Does nothing?!
+// const controls = new OrbitControls(this.camera, this.renderer.domElement);
+// controls.update();        // Does nothing?!
 
 
 // Clock
@@ -145,36 +146,40 @@ const ambientLight = new THREE.AmbientLight(0x808080, 1);
 this.scene.add(ambientLight);
 
 
-
-//-----------------------------------------
-//FOG
-//scene.fog = new THREE.Fog(0xFFFFFF, 10, 200);            // 10 is the near clipping plane, 200 is the far clipping plane
-//scene.fog = new THREE.FogExp2(0x888888, 0.01);           // (color, density)
-
 //------------------------------------------------------------------------------------------------
 
 
 
 //--------------------------------------* AUDIO *-------------------------------------------------
-
 const listener = new THREE.AudioListener();
 this.camera.add(listener);
 const audioLoader = new THREE.AudioLoader();
 
 const sound = new THREE.Audio(listener);
-const soundToRender = 'evil_laugh';
-// audioLoader.load(`audio/soundToRender.mp3`, function (buffer) {
-//   sound.setBuffer(buffer);
-//   sound.setVolume(1);
-//   sound.setLoop(true);
-// });
+let soundToRender = 'scary';
+audioLoader.load(`../../Audio/${soundToRender}.mp3`, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setVolume(1);
+    sound.setLoop(true);
+});
+this.bgSound = sound;
+
+const sound2 = new THREE.Audio(listener);
+soundToRender = 'Finish';
+audioLoader.load(`../../Audio/${soundToRender}.mp3`, function (buffer) {
+    sound2.setBuffer(buffer);
+    sound2.setVolume(2);
+    sound2.setLoop(true);
+});
+this.finishSound = sound2;
 
 //-------------------------------------------------------------------------------------------------
 
 
+
 //--------------------------------------* OBJECTS *-------------------------------------------------
 // Plane
-const planeGeometry = new THREE.PlaneGeometry(100, 100, 10, 10);                 
+const planeGeometry = new THREE.PlaneGeometry(100, 100, 50, 50); //50 50 change                
 const planeMaterial = new THREE.MeshStandardMaterial({
     color: 0xFFFFFF,
     side: THREE.DoubleSide
@@ -185,19 +190,29 @@ plane.castShadow = false;
 plane.receiveShadow = true;
 plane.rotation.x = -Math.PI / 2;
 this.scene.add(plane);
+
+// Plane2
+
+const bg = new THREE.TextureLoader().load('../../images/DemonGates.jpg');       
+const planeMaterial2 = new THREE.MeshStandardMaterial({
+    map: bg,
+});
+const plane2 = new THREE.Mesh(planeGeometry, planeMaterial2);
+plane2.position.set(0, 50, -130);
+this.scene.add(plane2);
+
 //------------------------------------------------------------------------------------------------
 
 
 this.boxCollider=createWalls(this.scene);
+this.portalCollider = new THREE.Sphere(new THREE.Vector3(0, 0, 0) , 2);
+this.gameOver=false;
 
-
-
-this.portalCollider = new THREE.Sphere(new THREE.Vector3(0, -1, 0) , 2);
 this.loadPortal();
-
 this._Connect();
 //-------------------------------------------------------------------------------------------------
 }
+
 
 //----------------------------------------* Portal *-----------------------------------------------
 loadPortal()
@@ -208,10 +223,10 @@ loadPortal()
 
         let object = gltf.scene;
         object.scale.set(1.4, 1.4, 1.4);
-        object.position.set(39, 1, -20);
+        object.position.set(42, 1, -8);
 
         this.portal = object;
-        this.portalCollider.center += object.position;
+        this.portalCollider.center = object.position;
         this.scene.add(object);
 
     },
@@ -228,31 +243,61 @@ loadPortal()
 
 //--------------------------------------------------------------------------------------------------
 
+
+
 //-------------------------------------* CONNECTIONS *----------------------------------------------
 _Connect() {
     // Connect camera and scene to the controls
     const params = {
         camera: this.camera,
         scene: this.scene,
+        collider: this.boxCollider,
     }
     this.controls = new BasicCharacterControls(params);
   
     // Connect camera and target to the third person camera
-        const params2 = {
-            camera: this.camera,
-            target: this.controls,
-        }
-        this.thirdPersonCamera = new ThirdPersonCamera(params2);
+    const params2 = {
+        camera: this.camera,
+        target: this.controls,
+        scene: this.scene,
+    }
+    this.thirdPersonCamera = new ThirdPersonCamera(params2);
 
 }
 //------------------------------------------------------------------------------------------------
     updateFrame(timeElapsed) 
     {
-        const element=document.getElementById("startButton");
+        const element=document.getElementById("container");
         if(element)
         {
             this.camera.position.set(0, 50, -100);
             return;
+        }
+
+        if(this.portal)
+            this.portal.rotation.y += timeElapsed*1.2;
+        if(this.gameOver)
+        {
+            this.controls._target.rotation.y += timeElapsed*1.2;
+
+            if(this.bgSound && this.bgSound.isPlaying)
+                this.bgSound.stop();
+
+            if(this.finishSound && !this.finishSound.isPlaying)
+                this.finishSound.play();
+
+            return;
+        }
+        
+        if(this.bgSound && !this.bgSound.isPlaying)
+            this.bgSound.play();
+
+        if(this.portalCollider.intersectsSphere(this.controls.objCollider))
+        {
+            console.log("You win!");
+            this.gameOver=true;
+            this.camera.position.z -= 3;
+            document.getElementById("winner").style.visibility="visible";
         }
 
 
@@ -260,27 +305,13 @@ _Connect() {
         {
             this.controls.Update(timeElapsed);
         }
-        if(this.thirdPersonCamera)
+        if(this.thirdPersonCamera && this.controls && !this.gameOver)
         {
             this.thirdPersonCamera.Update(timeElapsed);
         }
-        
-        this.portal.rotation.y += timeElapsed*1.2;
-        for(let i=0; i<this.boxCollider.length; i++)
-        {
-            if(this.boxCollider[i].intersectsSphere(this.controls.objCollider))
-            {
-                this.controls.collisonCheck = true;
-                break;
-            }
-            else
-            {
-                this.controls.collisonCheck = false;
-            }
-        }
-        //----------------------------------------------------------
     }
 }
+
 
 
 //--------------------------------------* ANIMATE *-----------------------------------------------
@@ -289,10 +320,10 @@ function animate(time)
     // Update the controls
     const updateDelta = world.clock.getDelta();
     world.updateFrame(updateDelta);
-    
  
     world.renderer.render(this.scene, this.camera);
 }
 
 //------------------------------------------------------------------------------------------------
 
+  
