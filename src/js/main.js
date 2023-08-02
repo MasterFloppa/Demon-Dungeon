@@ -157,7 +157,7 @@ const audioLoader = new THREE.AudioLoader();
 
 const sound = new THREE.Audio(listener);
 let soundToRender = 'scary';
-audioLoader.load(`../../Audio/${soundToRender}.mp3`, function (buffer) {
+audioLoader.load(`https://masterfloppa.github.io/Demon-Dungeon/Audio/${soundToRender}.mp3`, function (buffer) {
     sound.setBuffer(buffer);
     sound.setVolume(1);
     sound.setLoop(true);
@@ -221,7 +221,7 @@ loadPortal()
 {
     let objToRender = 'magic_ring';
     const gltfLoader = new GLTFLoader();
-    gltfLoader.load(`../../models/${objToRender}/scene.gltf`, (gltf) =>  {
+    gltfLoader.load(`https://masterfloppa.github.io/Demon-Dungeon/models/${objToRender}/scene.gltf`, (gltf) =>  {
 
         let object = gltf.scene;
         object.scale.set(1.4, 1.4, 1.4);
@@ -303,7 +303,6 @@ _Connect() {
             this.camera.position.z -= 3;
             document.getElementById("winner").style.visibility="visible";
         }
-
 
         if (this.controls) 
         {
