@@ -24,7 +24,7 @@ class BasicCharacterControls {
     LoadModel(){
         let objToRender = 'demon';
         const gltfLoader = new GLTFLoader();
-        gltfLoader.load(`../../models/${objToRender}/scene.gltf`, (gltf) =>  {
+        gltfLoader.load(`https://masterfloppa.github.io/Demon-Dungeon/models/${objToRender}/scene.gltf`, (gltf) =>  {
 
             let object = gltf.scene;
             object.scale.set(0.7, 0.8, 0.8);
