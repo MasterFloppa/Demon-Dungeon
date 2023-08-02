@@ -195,6 +195,8 @@ this.scene.add(plane);
 
 // Plane 2
 const bg = new THREE.TextureLoader().load('https://github.com/MasterFloppa/Demon-Dungeon/blob/main/images/DemonGates.jpg');       
+//const bg = new THREE.TextureLoader().load('images/DemonGates.jpg');       
+
 const planeMaterial2 = new THREE.MeshStandardMaterial({
     map: bg,
 });
