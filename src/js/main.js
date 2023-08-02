@@ -83,12 +83,12 @@ window.addEventListener('resize', () => {
 
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 const texture = cubeTextureLoader.load([                // Takes an array of images (6) for each side of the cube
-    '../images/posx.jpg',                     // Right side                 
-    '../../images/negx.jpg',                     // Left side
-    '../../images/posy.jpg',                     // Top side
-    '../../images/negy.jpg',                     // Bottom side
-    '../../images/posz.jpg',                     // Back side
-    '../../images/negz.jpg',                     // Front side           
+    'https://masterfloppa.github.io/Demon-Dungeon/images/posx.jpg',                     // Right side                 
+    'https://masterfloppa.github.io/Demon-Dungeon/images/negx.jpg',                     // Left side
+    'https://masterfloppa.github.io/Demon-Dungeon/images/posy.jpg',                     // Top side
+    'https://masterfloppa.github.io/Demon-Dungeon/images/negy.jpg',                     // Bottom side
+    'https://masterfloppa.github.io/Demon-Dungeon/images/posz.jpg',                     // Back side
+    'https://masterfloppa.github.io/Demon-Dungeon/images/negz.jpg',                     // Front side           
 ]);                                                                         //Using a skybox
 this.scene.background = texture;
 //-------------------------------------------------
@@ -166,7 +166,7 @@ this.bgSound = sound;
 
 const sound2 = new THREE.Audio(listener);
 soundToRender = 'Finish';
-audioLoader.load(`../../Audio/${soundToRender}.mp3`, function (buffer) {
+audioLoader.load(`https://masterfloppa.github.io/Demon-Dungeon/Audio/${soundToRender}.mp3`, function (buffer) {
     sound2.setBuffer(buffer);
     sound2.setVolume(2);
     sound2.setLoop(true);
@@ -179,7 +179,7 @@ this.finishSound = sound2;
 
 //--------------------------------------* OBJECTS *-------------------------------------------------
 // Plane
-const floor = new THREE.TextureLoader().load('../../images/floor.jpg'); 
+const floor = new THREE.TextureLoader().load('https://masterfloppa.github.io/Demon-Dungeon/images/floor.jpg'); 
 const planeGeometry = new THREE.PlaneGeometry(100, 100, 50, 50); //50 50 change                
 const planeMaterial = new THREE.MeshStandardMaterial({
     color: 0xa30d1b,
