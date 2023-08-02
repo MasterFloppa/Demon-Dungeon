@@ -83,7 +83,7 @@ window.addEventListener('resize', () => {
 
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 const texture = cubeTextureLoader.load([                // Takes an array of images (6) for each side of the cube
-    '../../images/posx.jpg',                     // Right side                 
+    '../images/posx.jpg',                     // Right side                 
     '../../images/negx.jpg',                     // Left side
     '../../images/posy.jpg',                     // Top side
     '../../images/negy.jpg',                     // Bottom side
