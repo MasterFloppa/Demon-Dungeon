@@ -194,7 +194,7 @@ plane.rotation.x = -Math.PI / 2;
 this.scene.add(plane);
 
 // Plane 2
-const bg = new THREE.TextureLoader().load('https://masterfloppa.github.io/images/DemonGates.jpg');              
+const bg = new THREE.TextureLoader().load('https://masterfloppa.github.io/Demon-Dungeon/images/DemonGates.jpg');              
 
 const planeMaterial2 = new THREE.MeshStandardMaterial({
     map: bg,
