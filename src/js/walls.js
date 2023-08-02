@@ -21,7 +21,7 @@ export function createWalls(scene)
 
 //-------------------------------* Positioning the walls *--------------------------------------------
 
-    const bg = new THREE.TextureLoader().load('../../images/wall.jpg'); 
+    const bg = new THREE.TextureLoader().load('Demon-Dungeon/images/wall.jpg'); 
     box[0].material.map=  bg;
 
     box[0].position.set(50, 10, 0); 
